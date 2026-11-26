@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Интерактивный образовательный сайт о Генри Форде, Ford Model T и конвейерном производстве.">
+<title>Мир Генри Форда — от идеи к конвейеру</title>
+<style>
+:root{--ink:#172536;--muted:#5b6876;--paper:#f5f1e8;--card:#fffdf8;--gold:#d69b35;--red:#a94332;--blue:#234765;--line:#e6dfd2;--green:#287653}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.65}
+header{background:linear-gradient(120deg,#172b40,#31536b);color:white;padding:22px 6vw 76px;position:relative;overflow:hidden}
+nav{max-width:1120px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.logo{font-weight:800;letter-spacing:.08em;font-size:14px}.navlinks{display:flex;gap:18px;flex-wrap:wrap}.navlinks a{color:#e8edf1;text-decoration:none;font-size:14px}.navlinks a:hover{color:#ffd27c}
+.hero{max-width:1120px;margin:72px auto 0;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.eyebrow{color:#ffd27c;text-transform:uppercase;letter-spacing:.16em;font-weight:bold;font-size:12px}
+h1{font-size:clamp(38px,6vw,68px);line-height:1.04;margin:14px 0 20px;max-width:700px}
+.hero p{color:#e0e8ee;max-width:620px;font-size:18px}
+.button{display:inline-block;background:var(--gold);color:#1b2835;text-decoration:none;padding:12px 20px;border-radius:5px;font-weight:bold;margin-top:12px}
+.car-art{width:100%;max-width:460px;justify-self:center;filter:drop-shadow(0 18px 20px #07142166)}
+main{max-width:1120px;margin:auto;padding:0 24px 70px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-34px 0 64px;position:relative}
+.stat{background:var(--card);border:1px solid var(--line);padding:18px;border-radius:8px;box-shadow:0 8px 20px #1c29300c}
+.stat strong{display:block;font-size:26px;color:var(--red)}.stat span{font-size:13px;color:var(--muted)}
+section{padding:20px 0 38px;scroll-margin-top:20px}.section-tag{color:var(--red);font-weight:bold;text-transform:uppercase;letter-spacing:.14em;font-size:12px}
+h2{font-size:clamp(27px,4vw,39px);line-height:1.15;margin:8px 0 16px}
+.lead{font-size:18px;color:var(--muted);max-width:800px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:24px}
+.card h3{margin:0 0 9px;font-size:21px}.card p{margin:8px 0;color:var(--muted)}
+.timeline{border-left:3px solid var(--gold);margin:25px 0 0 10px;padding-left:24px}
+.event{position:relative;margin:0 0 22px}.event:before{content:"";position:absolute;left:-32px;top:8px;width:13px;height:13px;background:var(--red);border:3px solid var(--paper);border-radius:50%}
+.year{font-weight:800;color:var(--red);font-size:18px}
+.model{background:#1d3449;color:white;border-radius:12px;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:center}
+.model p{color:#e0e8ee}.model ul{padding-left:20px;color:#e0e8ee}
+.model-illustration{background:#f1e5ce;border-radius:9px;padding:12px}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px;position:relative}
+.step b{display:block;color:var(--red);font-size:13px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+.step h3{font-size:17px;margin:0 0 8px}.step p{font-size:14px;color:var(--muted);margin:0}
+.note{background:#f2e5c9;border-left:4px solid var(--gold);padding:16px 19px;border-radius:4px;margin-top:20px;color:#4c4436}
+.factgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fact{background:var(--card);padding:20px;border-radius:8px;border:1px solid var(--line)}.fact .icon{font-size:27px}
+.quiz{background:#e9e2d4;border-radius:12px;padding:clamp(20px,4vw,38px)}
+.quiztop{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
+.progress{height:8px;background:#d3c9b8;border-radius:20px;overflow:hidden;margin:18px 0 25px}.bar{height:100%;width:0;background:var(--green);transition:width .25s}
+.question{font-size:21px;font-weight:bold;margin:10px 0 16px}
+.answers{display:grid;gap:10px}.answer{width:100%;text-align:left;background:#fffdf8;border:2px solid transparent;padding:13px 16px;border-radius:7px;font:inherit;cursor:pointer;color:var(--ink)}
+.answer:hover{border-color:var(--gold)}.answer:disabled{cursor:default;opacity:1}.answer.correct{border-color:var(--green);background:#e5f2e9}.answer.wrong{border-color:var(--red);background:#f8e8e3}
+.feedback{min-height:30px;font-weight:bold;margin:14px 0}.quiz-controls{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+button.primary{border:0;background:var(--blue);color:white;border-radius:5px;padding:12px 19px;font-size:15px;font-weight:bold;cursor:pointer}button.primary:disabled{opacity:.4;cursor:not-allowed}
+.result{display:none;background:var(--card);padding:25px;border-radius:9px;text-align:center}.result strong{font-size:38px;color:var(--green)}
+footer{background:#172b40;color:#d9e1e7;padding:30px 6vw;text-align:center;font-size:13px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;margin-top:45px}.car-art{max-width:340px}.stats{grid-template-columns:repeat(2,1fr);margin-bottom:38px}.grid2,.model{grid-template-columns:1fr}.process{grid-template-columns:repeat(2,1fr)}.factgrid{grid-template-columns:1fr}.navlinks{gap:10px}.navlinks a{font-size:12px}}
+@media(max-width:420px){main{padding-left:16px;padding-right:16px}.process{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo">ИСТОРИЯ АВТОМОБИЛЯ · 1900-е</div>
+    <div class="navlinks">
+      <a href="#ford">Генри Форд</a><a href="#model-t">Model T</a><a href="#conveyor">Конвейер</a><a href="#quiz">Викторина</a>
+    </div>
+  </nav>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Человек, изменивший производство</div>
+      <h1>Мир Генри Форда</h1>
+      <p>Как автомобиль стал доступнее, а конвейер изменил промышленность? Познакомься с историей Генри Форда, легендарной Model T и новым способом массового производства.</p>
+      <a class="button" href="#ford">Начать путешествие ↓</a>
+    </div>
+    <svg class="car-art" viewBox="0 0 520 300" role="img" aria-label="Стилизованное изображение старинного автомобиля">
+      <ellipse cx="260" cy="258" rx="205" ry="18" fill="#071421" opacity=".35"/>
+      <path d="M74 207 L91 164 Q105 145 160 139 L210 91 Q225 76 254 76 L322 76 Q344 76 360 99 L397 153 L438 167 Q455 174 459 195 L459 218 L62 218Z" fill="#b94d36" stroke="#f0c17b" stroke-width="7"/>
+      <path d="M179 137 L218 94 Q228 85 250 85 L280 85 L280 140Z" fill="#b8d0d6" stroke="#f0c17b" stroke-width="6"/>
+      <path d="M292 85 L322 85 Q339 85 350 103 L376 140 L292 140Z" fill="#b8d0d6" stroke="#f0c17b" stroke-width="6"/>
+      <path d="M85 170 L145 158 L164 177 L96 184Z" fill="#e8bd70"/><path d="M390 163 L437 178 L440 192 L402 185Z" fill="#f2d18b"/>
+      <rect x="58" y="204" width="407" height="18" rx="7" fill="#e0a64e"/>
+      <circle cx="151" cy="218" r="37" fill="#18212a" stroke="#d6c5a5" stroke-width="8"/><circle cx="151" cy="218" r="13" fill="#c2a36e"/>
+      <circle cx="375" cy="218" r="37" fill="#18212a" stroke="#d6c5a5" stroke-width="8"/><circle cx="375" cy="218" r="13" fill="#c2a36e"/>
+      <path d="M112 153 L101 124 L120 124 L137 151 M405 151 L420 123 L434 130 L430 164" fill="none" stroke="#e9bd70" stroke-width="7" stroke-linecap="round"/>
+      <path d="M229 74 L229 52 L248 52 L248 76" stroke="#e9bd70" stroke-width="7"/><circle cx="238" cy="46" r="9" fill="#e9bd70"/>
+    </svg>
+  </div>
+</header>
+<main>
+  <div class="stats">
+    <div class="stat"><strong>1863–1947</strong><span>Годы жизни Генри Форда</span></div>
+    <div class="stat"><strong>1903</strong><span>Основана Ford Motor Company</span></div>
+    <div class="stat"><strong>1908</strong><span>Начало выпуска Model T</span></div>
+    <div class="stat"><strong>1913</strong><span>Внедрение движущегося конвейера</span></div>
+  </div>
+
+  <section id="ford">
+    <div class="section-tag">01 · Человек и эпоха</div>
+    <h2>Кто такой Генри Форд?</h2>
+    <p class="lead">Генри Форд — американский промышленник, предприниматель и один из пионеров массового автомобильного производства. Его главная идея заключалась в том, чтобы выпускать надёжные автомобили большими партиями и делать их доступнее для обычных людей.</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>От механика к промышленнику</h3>
+        <p>Форд родился в 1863 году в штате Мичиган, США. С юности интересовался механизмами и техникой, работал механиком и изучал устройство машин.</p>
+        <p>В 1896 году он построил свой первый автомобиль — Quadricycle. Это была простая лёгкая машина с четырьмя колёсами.</p>
+      </div>
+      <div class="card">
+        <h3>Компания Ford</h3>
+        <p>В 1903 году Генри Форд вместе с партнёрами основал Ford Motor Company. Компания постепенно совершенствовала производство и стремилась выпускать автомобили, которые могли бы приобрести многие семьи.</p>
+        <p>Форд стал известен не только автомобилями, но и организацией труда на заводах.</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="event"><div class="year">1863</div>Рождение Генри Форда в штате Мичиган.</div>
+      <div class="event"><div class="year">1896</div>Создание первого автомобиля — Quadricycle.</div>
+      <div class="event"><div class="year">1903</div>Основание Ford Motor Company.</div>
+      <div class="event"><div class="year">1908</div>Начало производства Ford Model T.</div>
+      <div class="event"><div class="year">1913</div>Внедрение движущейся сборочной линии на заводе Highland Park.</div>
+      <div class="event"><div class="year">1947</div>Смерть Генри Форда.</div>
+    </div>
+  </section>
+
+  <section id="model-t">
+    <div class="section-tag">02 · Автомобиль, ставший легендой</div>
+    <h2>Ford Model T</h2>
+    <div class="model">
+      <div class="model-illustration">
+        <svg viewBox="0 0 500 260" width="100%" role="img" aria-label="Схематичное изображение Ford Model T">
+          <rect width="500" height="260" rx="8" fill="#ead8b9"/>
+          <path d="M55 174 L78 135 L145 123 L188 75 L305 75 L354 126 L414 140 L440 176 L440 194 L48 194Z" fill="#252e35" stroke="#b58b50" stroke-width="6"/>
+          <path d="M166 122 L198 84 L244 84 L244 124Z" fill="#a9c3c6" stroke="#b58b50" stroke-width="5"/>
+          <path d="M257 84 L300 84 L333 124 L257 124Z" fill="#a9c3c6" stroke="#b58b50" stroke-width="5"/>
+          <rect x="53" y="180" width="390" height="13" rx="4" fill="#bd8c4a"/>
+          <circle cx="139" cy="190" r="33" fill="#171b20" stroke="#d0b17d" stroke-width="7"/><circle cx="139" cy="190" r="10" fill="#b58b50"/>
+          <circle cx="365" cy="190" r="33" fill="#171b20" stroke="#d0b17d" stroke-width="7"/><circle cx="365" cy="190" r="10" fill="#b58b50"/>
+          <path d="M91 132 L74 104 L88 101 L111 132 M375 132 L394 104 L408 111 L403 142" stroke="#9b7443" stroke-width="6" fill="none"/>
+          <text x="250" y="235" text-anchor="middle" font-size="16" fill="#473c2e" font-weight="bold">MODEL T · 1908</text>
+        </svg>
+      </div>
+      <div>
+        <h3>«Жестяная Лиззи»</h3>
+        <p>Ford Model T появилась в 1908 году. Она была сравнительно простой, прочной и рассчитанной на массового покупателя. Благодаря совершенствованию производства её стоимость со временем снижалась.</p>
+        <ul>
+          <li>Простая конструкция облегчала обслуживание.</li>
+          <li>Автомобиль подходил для дорог того времени.</li>
+          <li>Массовый выпуск помогал снижать затраты.</li>
+          <li>Модель выпускалась до 1927 года.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note"><b>Почему Model T была важна?</b> Автомобиль помог сделать личный транспорт более распространённым. Он повлиял на повседневную жизнь людей, развитие дорог, торговли и целых городов.</div>
+  </section>
+
+  <section id="conveyor">
+    <div class="section-tag">03 · Новая организация труда</div>
+    <h2>Как работало конвейерное производство?</h2>
+    <p class="lead">До широкого внедрения конвейера рабочие могли собирать значительную часть автомобиля на одном месте. На движущейся сборочной линии изделие перемещалось между рабочими местами, а каждый работник выполнял определённую операцию.</p>
+    <div class="process">
+      <div class="step"><b>Этап 1</b><h3>Подача деталей</h3><p>К рабочим местам доставляют необходимые детали и узлы автомобиля.</p></div>
+      <div class="step"><b>Этап 2</b><h3>Движение по линии</h3><p>Шасси или автомобиль перемещается вдоль сборочной линии.</p></div>
+      <div class="step"><b>Этап 3</b><h3>Повторяющиеся операции</h3><p>Каждый работник выполняет свою часть сборки на определённом участке.</p></div>
+      <div class="step"><b>Этап 4</b><h3>Проверка</h3><p>Собранный автомобиль проверяют, чтобы убедиться в его исправности.</p></div>
+    </div>
+    <div class="note"><b>Что изменилось?</b> Движущаяся сборочная линия, внедрённая Ford на заводе Highland Park в 1913 году, значительно ускорила выпуск Model T. Часто приводят сравнение: сборка шасси занимала около 12 часов 30 минут до изменений и примерно 1 час 33 минуты после оптимизации процесса. Это пример того, насколько сильно новая организация труда могла повысить производительность.</div>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card"><h3>Преимущества</h3><p>Более быстрый выпуск продукции, повторяемость операций, возможность производить большое количество одинаковых изделий и постепенно снижать себестоимость.</p></div>
+      <div class="card"><h3>Сложности</h3><p>Работа могла стать однообразной и утомительной. Темп труда часто задавался движением линии, поэтому рабочим приходилось подстраиваться под общий ритм.</p></div>
+    </div>
+  </section>
+
+  <section id="legacy">
+    <div class="section-tag">04 · Наследие</div>
+    <h2>Как Форд повлиял на мир?</h2>
+    <div class="factgrid">
+      <div class="fact"><div class="icon">🏭</div><h3>Промышленность</h3><p>Конвейерный принцип стал важной частью массового производства во многих отраслях.</p></div>
+      <div class="fact"><div class="icon">🚗</div><h3>Автомобили для многих</h3><p>Model T помогла сделать автомобиль более доступным и привычным видом транспорта.</p></div>
+      <div class="fact"><div class="icon">👷</div><h3>Организация труда</h3><p>Подходы Ford повлияли на обсуждение производительности, заработной платы и условий труда.</p></div>
+    </div>
+    <p class="lead" style="margin-top:22px">История Генри Форда показывает, что важное изобретение — это не всегда отдельная машина или деталь. Иногда большое значение имеет новый способ организовать работу людей и оборудования.</p>
+  </section>
+
+  <section id="quiz">
+    <div class="section-tag">05 · Проверь себя</div>
+    <h2>Викторина по материалам сайта</h2>
+    <p class="lead">Ответь на 8 вопросов. После каждого ответа ты увидишь, правильно ли ответил и почему.</p>
+    <div class="quiz" id="quizBox">
+      <div class="quiztop"><b id="counter">Вопрос 1 из 8</b><span id="scoreLive">Правильных ответов: 0</span></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div id="question" class="question"></div>
+      <div id="answers" class="answers"></div>
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+      <div class="quiz-controls"><span id="hint" style="color:var(--muted);font-size:13px">Выбери один вариант ответа.</span><button class="primary" id="next" disabled>Следующий вопрос →</button></div>
+    </div>
+    <div class="result" id="result" aria-live="polite">
+      <div class="section-tag">Результат</div><h3>Викторина завершена!</h3>
+      <strong id="finalScore"></strong>
+      <p id="resultText"></p>
+      <button class="primary" id="restart">Пройти ещё раз</button>
+    </div>
+  </section>
+</main>
+<footer>Учебный проект · «Мир Генри Форда»<br>Материал подготовлен для знакомства с историей автомобилестроения и массового производства.</footer>
+<script>
+const questions=[
+ {q:"В каком году родился Генри Форд?",a:["1853","1863","1873","1883"],c:1,e:"Генри Форд родился в 1863 году в штате Мичиган, США."},
+ {q:"В каком году была основана Ford Motor Company?",a:["1896","1901","1903","1913"],c:2,e:"Компания Ford Motor Company была основана в 1903 году."},
+ {q:"Как назывался первый автомобиль, построенный Генри Фордом?",a:["Model T","Quadricycle","Mustang","Model A"],c:1,e:"В 1896 году Форд построил Quadricycle — лёгкий четырёхколёсный автомобиль."},
+ {q:"В каком году появилась Ford Model T?",a:["1903","1905","1908","1913"],c:2,e:"Производство Model T началось в 1908 году."},
+ {q:"Что было главным принципом движущегося конвейера?",a:["Каждый собирал весь автомобиль","Автомобиль перемещался между рабочими местами","Машины собирали только вручную дома","Детали не перевозили"],c:1,e:"Изделие двигалось по линии, а рабочие выполняли отдельные операции."},
+ {q:"В каком году Ford внедрил движущуюся сборочную линию на заводе Highland Park?",a:["1903","1908","1913","1927"],c:2,e:"Движущаяся сборочная линия была внедрена на заводе Highland Park в 1913 году."},
+ {q:"До какого года выпускалась Model T?",a:["1918","1923","1927","1935"],c:2,e:"Ford Model T выпускалась до 1927 года."},
+ {q:"Какое последствие имело развитие конвейерного производства?",a:["Производство стало медленнее","Стало невозможно выпускать одинаковые товары","Ускорился массовый выпуск продукции","Автомобили перестали нуждаться в проверке"],c:2,e:"Конвейер помог ускорить выпуск большого количества одинаковых изделий и повысить производительность."}
+];
+let index=0,score=0,locked=false;
+const qEl=document.getElementById("question"),aEl=document.getElementById("answers"),fb=document.getElementById("feedback"),next=document.getElementById("next");
+function render(){
+ locked=false;const item=questions[index];
+ document.getElementById("counter").textContent=`Вопрос ${index+1} из ${questions.length}`;
+ document.getElementById("scoreLive").textContent=`Правильных ответов: ${score}`;
+ document.getElementById("bar").style.width=`${index/questions.length*100}%`;
+ qEl.textContent=item.q; aEl.innerHTML="";fb.textContent="";next.disabled=true;
+ item.a.forEach((answer,i)=>{const b=document.createElement("button");b.className="answer";b.textContent=`${String.fromCharCode(65+i)}. ${answer}`;b.addEventListener("click",()=>choose(i));aEl.appendChild(b)});
+}
+function choose(choice){
+ if(locked)return;locked=true;const item=questions[index],buttons=[...aEl.children];
+ buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add("correct");if(i===choice&&choice!==item.c)b.classList.add("wrong")});
+ if(choice===item.c){score++;fb.textContent="Верно! "+item.e;fb.style.color="var(--green)"}else{fb.textContent="Не совсем. "+item.e;fb.style.color="var(--red)"}
+ document.getElementById("scoreLive").textContent=`Правильных ответов: ${score}`;
+ next.disabled=false;next.textContent=index===questions.length-1?"Узнать результат":"Следующий вопрос →";
+}
+next.addEventListener("click",()=>{if(!locked)return;index++;if(index<questions.length)render();else showResult()});
+function showResult(){
+ document.getElementById("quizBox").style.display="none";const r=document.getElementById("result");r.style.display="block";
+ document.getElementById("bar").style.width="100%";document.getElementById("finalScore").textContent=`${score} / ${questions.length}`;
+ document.getElementById("resultText").textContent=score===8?"Отлично! Ты внимательно изучил материал.":score>=5?"Хороший результат! Повтори материал и попробуй ещё раз.":"Стоит ещё раз прочитать разделы сайта — теперь ты знаешь, на что обратить внимание.";
+}
+document.getElementById("restart").addEventListener("click",()=>{index=0;score=0;document.getElementById("result").style.display="none";document.getElementById("quizBox").style.display="block";next.textContent="Следующий вопрос →";render()});
+render();
+</script>
+</body>
+</html>
